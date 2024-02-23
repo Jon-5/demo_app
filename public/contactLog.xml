@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <h:head>
+    <h:title>t6n</h:title>
+    <model odk:xforms-version="1.0.0">
+      <instance>
+        <contactLog id="contactLog">
+          <start/>
+          <end/>
+          <Date_of_Contact/>
+          <Contact_Type/>
+          <Contact_Reason/>
+          <Client_OK/>
+          <Contact_Details/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </contactLog>
+      </instance>
+      <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/contactLog/start" type="dateTime"/>
+      <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/contactLog/end" type="dateTime"/>
+      <bind nodeset="/contactLog/Date_of_Contact" required="false()" type="date"/>
+      <bind nodeset="/contactLog/Contact_Type" required="false()" type="string"/>
+      <bind nodeset="/contactLog/Contact_Reason" required="true()" type="string"/>
+      <bind nodeset="/contactLog/Client_OK" relevant=" /contactLog/Contact_Reason  = 'confirm_client_ok'" required="false()" type="string"/>
+      <bind nodeset="/contactLog/Contact_Details" relevant=" /contactLog/Client_OK  = 'yes'" required="false()" type="string"/>
+      <bind jr:preload="uid" nodeset="/contactLog/meta/instanceID" readonly="true()" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+    <input ref="/contactLog/Date_of_Contact">
+      <label>Date of Contact</label>
+    </input>
+    <select1 appearance="horizontal-compact" ref="/contactLog/Contact_Type">
+      <label>Contact Type</label>
+      <item>
+        <label>Telephone</label>
+        <value>telephone</value>
+      </item>
+      <item>
+        <label>Face to Face</label>
+        <value>face_to_face</value>
+      </item>
+    </select1>
+    <select1 appearance="minimal" ref="/contactLog/Contact_Reason">
+      <label>Contact Reason</label>
+      <item>
+        <label>Confirm Client OK</label>
+        <value>confirm_client_ok</value>
+      </item>
+      <item>
+        <label>Requested by Client</label>
+        <value>requested_by_client</value>
+      </item>
+      <item>
+        <label>GDPR Data Request</label>
+        <value>gdpr_data_request</value>
+      </item>
+      <item>
+        <label>GDPR | RTBF</label>
+        <value>gdpr___rtbf</value>
+      </item>
+      <item>
+        <label>Life Event</label>
+        <value>life_event</value>
+      </item>
+      <item>
+        <label>Check-in</label>
+        <value>check_in</value>
+      </item>
+      <item>
+        <label>Other</label>
+        <value>other</value>
+      </item>
+    </select1>
+    <select1 appearance="horizontal-compact" ref="/contactLog/Client_OK">
+      <label>Client OK</label>
+      <item>
+        <label>Yes</label>
+        <value>yes</value>
+      </item>
+      <item>
+        <label>No</label>
+        <value>no</value>
+      </item>
+    </select1>
+    <input appearance="multiline" ref="/contactLog/Contact_Details">
+      <label>Contact Details</label>
+    </input>
+  </h:body>
+</h:html>
